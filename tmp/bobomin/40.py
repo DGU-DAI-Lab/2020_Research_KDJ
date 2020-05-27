@@ -1,0 +1,1 @@
+print('..A..\n.A.A.\nAAAAA'+'\nA...A'*2)
