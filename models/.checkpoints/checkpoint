@@ -1,2 +1,0 @@
-model_checkpoint_path: "mnist_2_layers"
-all_model_checkpoint_paths: "mnist_2_layers"
