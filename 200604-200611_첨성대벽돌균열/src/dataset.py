@@ -101,4 +101,16 @@ def split_train_test(x, y, test_ratio=0.2, shuffle=True):
     x_test = x_shuffled[:size_of_test]
     y_test = y_shuffled[:size_of_test]
 
+    print(f"""
+test:
+    label-0: {len(np.where(y_test == 0)[0])}
+    label-1: {len(np.where(y_test == 1)[0])}
+    total  : {len(y_test)}
+train:
+    label-0: {len(np.where(y_train == 0)[0])}
+    label-1: {len(np.where(y_train == 1)[0])}
+    total  : {len(y_train)}
+""")
+
+
     return (x_train, y_train), (x_test, y_test)
