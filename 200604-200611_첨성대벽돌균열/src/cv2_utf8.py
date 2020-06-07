@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 
+import os
+
 def imread(filename, flags=cv2.IMREAD_COLOR, dtype=np.uint8):
     """유니코드로 이루어진 파일경로를 읽기위한 함수. 동작은 cv2.imread()와 동일하다.\n
     scrapped from: https://jangjy.tistory.com/337"""
@@ -9,7 +11,7 @@ def imread(filename, flags=cv2.IMREAD_COLOR, dtype=np.uint8):
         img = cv2.imdecode(n, flags)
         return img
     except Exception as e:
-        print(e)
+        print('@cv2_utf8.imshow: ', e)
         return None
 
 def imwrite(filename, img, params=None):
@@ -25,5 +27,5 @@ def imwrite(filename, img, params=None):
         else:
             return False
     except Exception as e:
-        print(e)
+        print('@cv2_utf8.imwrite: ', filename, e)
         return False
