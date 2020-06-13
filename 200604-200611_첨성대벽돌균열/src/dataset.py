@@ -50,7 +50,7 @@ def save(x_data:list, y_data:list, class_path:str=DEFAULT_CLASS_PATH) -> None:
 
         cv2_utf8.imwrite(file_path, x)
 
-def load(class_path:str=DEFAULT_CLASS_PATH) -> 'test, train dataset':
+def load(class_path:str=DEFAULT_CLASS_PATH, seed=0) -> 'test, train dataset':
     """save()를 통해 저장한 데이터를 불러와, test, train 두 데이터셋쌍으로 반환"""
     x_data = []
     y_data = []
@@ -84,9 +84,11 @@ def load(class_path:str=DEFAULT_CLASS_PATH) -> 'test, train dataset':
     x_data = np.array(x_data)
     y_data = np.array(y_data)
 
-    return split_train_test(x_data, y_data)
+    return split_train_test(x_data, y_data, seed=seed)
 
-def split_train_test(x, y, test_ratio=0.2, shuffle=True):
+def split_train_test(x, y, test_ratio=0.2, shuffle=True, seed=0):
+    np.random.seed(seed)
+
     n_of_data = len(x)
 
     shuffled_indices = np.random.permutation(n_of_data)
@@ -102,15 +104,13 @@ def split_train_test(x, y, test_ratio=0.2, shuffle=True):
     y_test = y_shuffled[:size_of_test]
 
     print(f"""
-test:
-    label-0: {len(np.where(y_test == 0)[0])}
-    label-1: {len(np.where(y_test == 1)[0])}
-    total  : {len(y_test)}
-train:
-    label-0: {len(np.where(y_train == 0)[0])}
-    label-1: {len(np.where(y_train == 1)[0])}
-    total  : {len(y_train)}
+* random_seed: {seed}
+* train: {len(y_train)} samples
+    label-0(normal): {len(np.where(y_train == 0)[0])}
+    label-1(broken): {len(np.where(y_train == 1)[0])}
+* test: {len(y_test)} samples
+    label-0(normal): {len(np.where(y_test == 0)[0])}
+    label-1(broken): {len(np.where(y_test == 1)[0])}
 """)
-
 
     return (x_train, y_train), (x_test, y_test)
